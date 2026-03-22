@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<!-- saved from url=(0174)https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62e636f9-a702-432b-a137-881840d7d98b/admin-products.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management - FurryNeeds Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f8f9fa;
+        }
+        .admin-header {
+            background: linear-gradient(135deg, #FDCA5D 0%, #ffdb8d 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 28px; font-weight: bold; }
+        .admin-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 5px; }
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: #FDCA5D;
+            color: white;
+        }
+        .menu-icon { font-size: 20px; width: 24px; }
+        .main-content { min-height: 500px; }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .page-title { font-size: 28px; font-weight: bold; }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background: #FDCA5D;
+            color: white;
+        }
+        .btn-primary:hover { background: #e6b84d; }
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .content-section {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .search-filter-bar {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .search-box {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .filter-select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .data-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .data-table tr:hover { background: #f8f9fa; }
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .product-thumb {
+            width: 50px;
+            height: 50px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .stock-status {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .stock-in { background: #d4edda; color: #155724; }
+        .stock-low { background: #fff3cd; color: #856404; }
+        .stock-out { background: #f8d7da; color: #721c24; }
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title { font-size: 22px; font-weight: bold; }
+        .close-btn {
+            font-size: 28px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #999;
+        }
+        .modal-body { padding: 25px; }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        textarea { min-height: 100px; resize: vertical; }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        @media (max-width: 768px) {
+            .admin-layout { grid-template-columns: 1fr; }
+            .sidebar { position: static; }
+            .search-filter-bar { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div class="header-content">
+            <div class="logo">🐾 FurryNeeds Admin</div>
+            <button class="btn btn-secondary" onclick="window.location.href='login.html';" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white;" fdprocessedid="f82bqb">Logout</button>
+        </div>
+    </div>
+
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62e636f9-a702-432b-a137-881840d7d98b/admin-dashboard.html"><span class="menu-icon">📊</span> Dashboard</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62e636f9-a702-432b-a137-881840d7d98b/admin-products.html#" class="active"><span class="menu-icon">📦</span> Products</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62e636f9-a702-432b-a137-881840d7d98b/admin-products.html#"><span class="menu-icon">🛒</span> Orders</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62e636f9-a702-432b-a137-881840d7d98b/admin-products.html#"><span class="menu-icon">👥</span> Customers</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62e636f9-a702-432b-a137-881840d7d98b/admin-reports.html"><span class="menu-icon">📈</span> Reports</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62e636f9-a702-432b-a137-881840d7d98b/admin-products.html#"><span class="menu-icon">📋</span> Inventory</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62e636f9-a702-432b-a137-881840d7d98b/admin-products.html#"><span class="menu-icon">⚙️</span> Settings</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Product Management</h1>
+                <button class="btn btn-primary" onclick="openModal('add')" fdprocessedid="n8c3io">+ Add New Product</button>
+            </div>
+
+            <div class="content-section">
+                <div class="search-filter-bar">
+                    <input type="text" class="search-box" placeholder="Search products by name or SKU..." fdprocessedid="mnnf7l">
+                    <select class="filter-select" fdprocessedid="8sseyi">
+                        <option>All Categories</option>
+                        <option>Dog Food</option>
+                        <option>Cat Food</option>
+                        <option>Dog Toys</option>
+                        <option>Cat Toys</option>
+                        <option>Healthcare</option>
+                        <option>Grooming</option>
+                    </select>
+                    <select class="filter-select" fdprocessedid="7m2ce">
+                        <option>All Stock Status</option>
+                        <option>In Stock</option>
+                        <option>Low Stock</option>
+                        <option>Out of Stock</option>
+                    </select>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Status</th>
+                            <th>Pet Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-thumb">🍖</div>
+                                    <div>
+                                        <div style="font-weight: 600;">Premium Grain-Free Dog Food</div>
+                                        <div style="font-size: 12px; color: #999;">SKU: DGF-001</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dog Food</td>
+                            <td>$42.99</td>
+                            <td>45 units</td>
+                            <td><span class="stock-status stock-in">In Stock</span></td>
+                            <td>Dogs</td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn btn-primary btn-sm" onclick="openModal('edit', 1)" fdprocessedid="w5hxp">Edit</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="updateStock(1)" fdprocessedid="kf787">Stock</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(1)" fdprocessedid="gzxib">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-thumb">🧸</div>
+                                    <div>
+                                        <div style="font-weight: 600;">Interactive Squeaky Toy Set</div>
+                                        <div style="font-size: 12px; color: #999;">SKU: DGT-015</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dog Toys</td>
+                            <td>$18.99</td>
+                            <td>12 units</td>
+                            <td><span class="stock-status stock-low">Low Stock</span></td>
+                            <td>Dogs</td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn btn-primary btn-sm" onclick="openModal('edit', 2)" fdprocessedid="6e55gt">Edit</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="updateStock(2)" fdprocessedid="l0ds5s">Stock</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(2)" fdprocessedid="znr4r4">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-thumb">🦴</div>
+                                    <div>
+                                        <div style="font-weight: 600;">Natural Dental Chew Sticks</div>
+                                        <div style="font-size: 12px; color: #999;">SKU: DGT-028</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dog Treats</td>
+                            <td>$24.99</td>
+                            <td>67 units</td>
+                            <td><span class="stock-status stock-in">In Stock</span></td>
+                            <td>Dogs</td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn btn-primary btn-sm" onclick="openModal('edit', 3)" fdprocessedid="4p6er">Edit</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="updateStock(3)" fdprocessedid="tbpoig">Stock</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(3)" fdprocessedid="sbsy5o">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-thumb">🐱</div>
+                                    <div>
+                                        <div style="font-weight: 600;">Premium Cat Litter 20lb</div>
+                                        <div style="font-size: 12px; color: #999;">SKU: CAT-042</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Cat Care</td>
+                            <td>$24.00</td>
+                            <td>8 units</td>
+                            <td><span class="stock-status stock-low">Low Stock</span></td>
+                            <td>Cats</td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn btn-primary btn-sm" onclick="openModal('edit', 4)" fdprocessedid="dz5tz">Edit</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="updateStock(4)" fdprocessedid="3bptub">Stock</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(4)" fdprocessedid="ln03em">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-thumb">🛏️</div>
+                                    <div>
+                                        <div style="font-weight: 600;">Orthopedic Dog Bed</div>
+                                        <div style="font-size: 12px; color: #999;">SKU: DGA-073</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Dog Accessories</td>
+                            <td>$79.99</td>
+                            <td>23 units</td>
+                            <td><span class="stock-status stock-in">In Stock</span></td>
+                            <td>Dogs</td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn btn-primary btn-sm" onclick="openModal('edit', 5)" fdprocessedid="3nx1ae">Edit</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="updateStock(5)" fdprocessedid="k0ln7s">Stock</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(5)" fdprocessedid="7rodbq">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Add New Product</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" placeholder="Enter product name" required="">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select required="">
+                                <option>Select category</option>
+                                <option>Dog Food</option>
+                                <option>Cat Food</option>
+                                <option>Dog Toys</option>
+                                <option>Cat Toys</option>
+                                <option>Healthcare</option>
+                                <option>Grooming</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Pet Type</label>
+                            <select required="">
+                                <option>Select pet type</option>
+                                <option>Dogs</option>
+                                <option>Cats</option>
+                                <option>Birds</option>
+                                <option>Fish</option>
+                                <option>Small Pets</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea placeholder="Enter product description"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Price ($)</label>
+                            <input type="number" step="0.01" placeholder="0.00" required="">
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Quantity</label>
+                            <input type="number" placeholder="0" required="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>SKU</label>
+                            <input type="text" placeholder="e.g., DGF-001" required="">
+                        </div>
+                        <div class="form-group">
+                            <label>Vet Approved</label>
+                            <select>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ingredients (optional)</label>
+                        <textarea placeholder="List ingredients if applicable"></textarea>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">Save Product</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(mode, id) {
+            document.getElementById('productModal').classList.add('show');
+            if (mode === 'edit') {
+                document.getElementById('modalTitle').textContent = 'Edit Product';
+            } else {
+                document.getElementById('modalTitle').textContent = 'Add New Product';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('show');
+        }
+
+        function updateStock(id) {
+            const newStock = prompt('Enter new stock quantity:');
+            if (newStock) {
+                alert(`Stock updated to ${newStock} units for product ${id}`);
+            }
+        }
+
+        function deleteProduct(id) {
+            if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+                alert(`Product ${id} deleted successfully`);
+            }
+        }
+    </script>
+
+
+<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
+                    <div class="sound">
+                        <div class="sound-icon"></div>
+                        <div class="sound-wave sound-wave_one"></div>
+                        <div class="sound-wave sound-wave_two"></div>
+                        <div class="sound-wave sound-wave_three"></div>
+                    </div>
+                    <div class="segments-box">
+                        <div data-range="1-20" class="segment"><span></span></div>
+                        <div data-range="21-40" class="segment"><span></span></div>
+                        <div data-range="41-60" class="segment"><span></span></div>
+                        <div data-range="61-80" class="segment"><span></span></div>
+                        <div data-range="81-100" class="segment"><span></span></div>
+                    </div>
+                </div><span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span></body></html>

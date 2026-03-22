@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!-- saved from url=(0173)https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/2d1203d8-1be2-43a1-8ea2-fb430570e98a/admin-reports.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Reports - FurryNeeds Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f8f9fa; }
+        .admin-header { background: linear-gradient(135deg, #FDCA5D 0%, #ffdb8d 100%); color: white; padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-content { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; font-weight: bold; }
+        .admin-layout { max-width: 1400px; margin: 0 auto; padding: 30px 20px; display: grid; grid-template-columns: 250px 1fr; gap: 30px; }
+        .sidebar { background: white; border-radius: 8px; padding: 20px; height: fit-content; position: sticky; top: 20px; }
+        .sidebar-menu { list-style: none; }
+        .sidebar-menu li { margin-bottom: 5px; }
+        .sidebar-menu a { display: flex; align-items: center; gap: 12px; padding: 12px 15px; text-decoration: none; color: #333; border-radius: 6px; transition: all 0.3s; font-weight: 500; }
+        .sidebar-menu a:hover, .sidebar-menu a.active { background: #FDCA5D; color: white; }
+        .menu-icon { font-size: 20px; width: 24px; }
+        .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .btn-primary { background: #FDCA5D; color: white; }
+        .btn-secondary { background: #f0f0f0; color: #333; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .page-title { font-size: 28px; font-weight: bold; }
+        .content-section { background: white; border-radius: 8px; padding: 25px; margin-bottom: 20px; }
+        .report-filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .filter-select { padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 6px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; border-radius: 8px; padding: 20px; border-left: 4px solid #FDCA5D; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .stat-value { font-size: 28px; font-weight: bold; margin-bottom: 5px; }
+        .stat-label { color: #666; font-size: 14px; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th { background: #f8f9fa; padding: 12px; text-align: left; font-weight: 600; color: #666; border-bottom: 2px solid #e0e0e0; }
+        .data-table td { padding: 15px 12px; border-bottom: 1px solid #e0e0e0; }
+        .data-table tr:hover { background: #f8f9fa; }
+        .chart-placeholder { height: 300px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999; }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <div class="header-content">
+            <div class="logo">🐾 FurryNeeds Admin</div>
+            <button class="btn btn-secondary" onclick="window.location.href='login.html';" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white;">Logout</button>
+        </div>
+    </div>
+    <div class="admin-layout">
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/2d1203d8-1be2-43a1-8ea2-fb430570e98a/admin-dashboard.html"><span class="menu-icon">📊</span> Dashboard</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/2d1203d8-1be2-43a1-8ea2-fb430570e98a/admin-products.html"><span class="menu-icon">📦</span> Products</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/2d1203d8-1be2-43a1-8ea2-fb430570e98a/admin-reports.html#"><span class="menu-icon">🛒</span> Orders</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/2d1203d8-1be2-43a1-8ea2-fb430570e98a/admin-reports.html#"><span class="menu-icon">👥</span> Customers</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/2d1203d8-1be2-43a1-8ea2-fb430570e98a/admin-reports.html#" class="active"><span class="menu-icon">📈</span> Reports</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/2d1203d8-1be2-43a1-8ea2-fb430570e98a/admin-reports.html#"><span class="menu-icon">📋</span> Inventory</a></li>
+                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/2d1203d8-1be2-43a1-8ea2-fb430570e98a/admin-reports.html#"><span class="menu-icon">⚙️</span> Settings</a></li>
+            </ul>
+        </aside>
+        <main>
+            <div class="page-header">
+                <h1 class="page-title">Sales &amp; Inventory Reports</h1>
+                <button class="btn btn-primary" onclick="window.print()">📄 Export PDF</button>
+            </div>
+            <div class="content-section">
+                <div class="report-filters">
+                    <select class="filter-select">
+                        <option>Daily Report</option>
+                        <option>Weekly Report</option>
+                        <option selected="">Monthly Report</option>
+                        <option>Custom Date Range</option>
+                    </select>
+                    <select class="filter-select">
+                        <option selected="">All Categories</option>
+                        <option>Dog Food</option>
+                        <option>Cat Food</option>
+                        <option>Toys</option>
+                        <option>Healthcare</option>
+                    </select>
+                    <button class="btn btn-primary">Generate Report</button>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">$24,580</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">342</div>
+                        <div class="stat-label">Total Orders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$71.87</div>
+                        <div class="stat-label">Average Order Value</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">892</div>
+                        <div class="stat-label">Active Customers</div>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 15px;">Sales Trend (March 2026)</h3>
+                <div class="chart-placeholder">📊 Sales Chart Visualization</div>
+            </div>
+            <div class="content-section">
+                <h3 style="margin-bottom: 20px;">Best Selling Products</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Rank</th><th>Product</th><th>Category</th><th>Units Sold</th><th>Revenue</th><th>Profit</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Premium Grain-Free Dog Food</td><td>Dog Food</td><td>124</td><td>$5,330.76</td><td>$1,865.77</td></tr>
+                        <tr><td>2</td><td>Orthopedic Dog Bed</td><td>Accessories</td><td>54</td><td>$4,319.46</td><td>$1,511.81</td></tr>
+                        <tr><td>3</td><td>Natural Dental Chew Sticks</td><td>Treats</td><td>87</td><td>$2,174.13</td><td>$760.95</td></tr>
+                        <tr><td>4</td><td>Interactive Squeaky Toy Set</td><td>Toys</td><td>98</td><td>$1,861.02</td><td>$651.36</td></tr>
+                        <tr><td>5</td><td>Premium Cat Litter 20lb</td><td>Cat Care</td><td>76</td><td>$1,824.00</td><td>$638.40</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="content-section">
+                <h3 style="margin-bottom: 20px;">Low Stock Items (Inventory Alert)</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Product</th><th>Category</th><th>Current Stock</th><th>Reorder Level</th><th>Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Interactive Squeaky Toy Set</td><td>Dog Toys</td><td style="color: #ff9800; font-weight: 600;">12 units</td><td>20 units</td><td><button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">Reorder</button></td></tr>
+                        <tr><td>Premium Cat Litter 20lb</td><td>Cat Care</td><td style="color: #ff9800; font-weight: 600;">8 units</td><td>15 units</td><td><button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">Reorder</button></td></tr>
+                        <tr><td>Vitamin Supplements for Dogs</td><td>Healthcare</td><td style="color: #dc3545; font-weight: 600;">3 units</td><td>10 units</td><td><button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;">Reorder</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+
+<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
+                    <div class="sound">
+                        <div class="sound-icon"></div>
+                        <div class="sound-wave sound-wave_one"></div>
+                        <div class="sound-wave sound-wave_two"></div>
+                        <div class="sound-wave sound-wave_three"></div>
+                    </div>
+                    <div class="segments-box">
+                        <div data-range="1-20" class="segment"><span></span></div>
+                        <div data-range="21-40" class="segment"><span></span></div>
+                        <div data-range="41-60" class="segment"><span></span></div>
+                        <div data-range="61-80" class="segment"><span></span></div>
+                        <div data-range="81-100" class="segment"><span></span></div>
+                    </div>
+                </div></body></html>

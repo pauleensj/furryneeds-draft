@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<!-- saved from url=(0164)https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62ab1b86-6d3e-4570-8557-bcb8bdc0a4e2/cart.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - FurryNeeds</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .top-bar {
+            background: #FDCA5D;
+            color: white;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        .header-main {
+            padding: 20px 0;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FDCA5D;
+        }
+        /* Progress Steps */
+        .progress-steps {
+            background: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .step.active .step-circle {
+            background: #FDCA5D;
+            color: white;
+        }
+        .step.completed .step-circle {
+            background: #4CAF50;
+            color: white;
+        }
+        .step-label {
+            font-weight: 600;
+            color: #999;
+        }
+        .step.active .step-label {
+            color: #FDCA5D;
+        }
+        .step-arrow {
+            color: #e0e0e0;
+            font-size: 20px;
+        }
+        /* Main Content */
+        .cart-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            padding: 20px 0 40px;
+        }
+        .cart-items {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .cart-header h1 {
+            font-size: 28px;
+        }
+        .item-count {
+            color: #666;
+            font-size: 16px;
+        }
+        .cart-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .item-image {
+            width: 120px;
+            height: 120px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .item-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+        .item-meta {
+            color: #666;
+            font-size: 14px;
+        }
+        .item-stock {
+            color: #4CAF50;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .item-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .action-link {
+            color: #FDCA5D;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .action-link:hover {
+            text-decoration: underline;
+        }
+        .item-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+        .item-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .qty-controls {
+            display: flex;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .qty-btn {
+            padding: 8px 15px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .qty-btn:hover {
+            background: #f0f0f0;
+        }
+        .qty-display {
+            padding: 8px 20px;
+            border-left: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+            font-weight: 600;
+            min-width: 50px;
+            text-align: center;
+        }
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .summary-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .promo-code {
+            margin-bottom: 20px;
+        }
+        .promo-input {
+            display: flex;
+            gap: 10px;
+        }
+        .promo-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .btn-apply {
+            padding: 12px 20px;
+            background: #FDCA5D;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 16px;
+        }
+        .summary-line.total {
+            font-size: 20px;
+            font-weight: bold;
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 2px solid #e0e0e0;
+        }
+        .savings-text {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+        .btn-checkout {
+            width: 100%;
+            padding: 18px;
+            background: #FDCA5D;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        .btn-checkout:hover {
+            background: #e6b84d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(253, 202, 93, 0.4);
+        }
+        .continue-shopping {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .continue-shopping a {
+            color: #FDCA5D;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .trust-badges {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .trust-badge {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .trust-badge-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        @media (max-width: 768px) {
+            .cart-content {
+                grid-template-columns: 1fr;
+            }
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+            }
+            .item-right {
+                grid-column: 2;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            🎉 Free Shipping on Orders Over $50 | 30-Day Returns
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">🐾 FurryNeeds</div>
+                    <div>
+                        <a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62ab1b86-6d3e-4570-8557-bcb8bdc0a4e2/login.html" style="text-decoration: none; color: #FDCA5D; font-weight: 600;">
+                            👤 Login / Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+        <div class="container">
+            <div class="steps-container">
+                <div class="step active">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Cart</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Checkout</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Payment</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Confirmation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="container">
+        <div class="cart-content">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <div class="cart-header">
+                    <h1>Shopping Cart</h1>
+                    <div class="item-count">3 items</div>
+                </div>
+
+                <!-- Item 1 -->
+                <div class="cart-item">
+                    <div class="item-image">🍖</div>
+                    <div class="item-details">
+                        <div class="item-title">Premium Grain-Free Adult Dog Food</div>
+                        <div class="item-meta">Size: 15 lb</div>
+                        <div class="item-stock">✓ In Stock</div>
+                        <div class="item-actions">
+                            <a class="action-link" onclick="removeItem(1)">Remove</a>
+                            <a class="action-link">Save for Later</a>
+                        </div>
+                    </div>
+                    <div class="item-right">
+                        <div class="item-price">$42.99</div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty(1, -1)" fdprocessedid="hjnui">−</button>
+                            <div class="qty-display" id="qty-1">1</div>
+                            <button class="qty-btn" onclick="updateQty(1, 1)" fdprocessedid="rpyxm4">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="cart-item">
+                    <div class="item-image">🧸</div>
+                    <div class="item-details">
+                        <div class="item-title">Interactive Squeaky Dog Toy Set (3-Pack)</div>
+                        <div class="item-meta">Color: Assorted</div>
+                        <div class="item-stock">✓ In Stock</div>
+                        <div class="item-actions">
+                            <a class="action-link" onclick="removeItem(2)">Remove</a>
+                            <a class="action-link">Save for Later</a>
+                        </div>
+                    </div>
+                    <div class="item-right">
+                        <div class="item-price">$18.99</div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty(2, -1)" fdprocessedid="c8x8y">−</button>
+                            <div class="qty-display" id="qty-2">2</div>
+                            <button class="qty-btn" onclick="updateQty(2, 1)" fdprocessedid="w1ki4">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="cart-item">
+                    <div class="item-image">🦴</div>
+                    <div class="item-details">
+                        <div class="item-title">Natural Dental Chew Sticks (30-Count)</div>
+                        <div class="item-meta">Flavor: Chicken</div>
+                        <div class="item-stock">✓ In Stock</div>
+                        <div class="item-actions">
+                            <a class="action-link" onclick="removeItem(3)">Remove</a>
+                            <a class="action-link">Save for Later</a>
+                        </div>
+                    </div>
+                    <div class="item-right">
+                        <div class="item-price">$24.99</div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty(3, -1)" fdprocessedid="x1l8gg">−</button>
+                            <div class="qty-display" id="qty-3">1</div>
+                            <button class="qty-btn" onclick="updateQty(3, 1)" fdprocessedid="fniz8">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <div class="summary-title">Order Summary</div>
+
+                <div class="promo-code">
+                    <label style="font-weight: 600; display: block; margin-bottom: 10px;">Promo Code</label>
+                    <div class="promo-input">
+                        <input type="text" placeholder="Enter code" fdprocessedid="5qjo2c">
+                        <button class="btn-apply" fdprocessedid="39aq3a">Apply</button>
+                    </div>
+                </div>
+
+                <div class="summary-line">
+                    <span>Subtotal (4 items)</span>
+                    <span id="subtotal">$105.96</span>
+                </div>
+                <div class="summary-line">
+                    <span>Shipping</span>
+                    <span class="savings-text">FREE</span>
+                </div>
+                <div class="summary-line">
+                    <span>Tax (Estimated)</span>
+                    <span id="tax">$8.48</span>
+                </div>
+                <div class="summary-line">
+                    <span>Discount</span>
+                    <span class="savings-text" id="discount">-$10.00</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total</span>
+                    <span id="total">$104.44</span>
+                </div>
+
+                <button class="btn-checkout" onclick="window.location.href='checkout.html';" fdprocessedid="7q2ruh">
+                    Proceed to Checkout
+                </button>
+
+                <div class="continue-shopping">
+                    <a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/62ab1b86-6d3e-4570-8557-bcb8bdc0a4e2/products.html">← Continue Shopping</a>
+                </div>
+
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <div class="trust-badge-icon">🔒</div>
+                        <div>Secure<br>Checkout</div>
+                    </div>
+                    <div class="trust-badge">
+                        <div class="trust-badge-icon">🚚</div>
+                        <div>Free<br>Shipping</div>
+                    </div>
+                    <div class="trust-badge">
+                        <div class="trust-badge-icon">↩️</div>
+                        <div>Easy<br>Returns</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let quantities = {1: 1, 2: 2, 3: 1};
+        let prices = {1: 42.99, 2: 18.99, 3: 24.99};
+
+        function updateQty(itemId, change) {
+            const currentQty = quantities[itemId];
+            const newQty = currentQty + change;
+
+            if (newQty >= 1 && newQty <= 10) {
+                quantities[itemId] = newQty;
+                document.getElementById(`qty-${itemId}`).textContent = newQty;
+                updateTotals();
+            }
+        }
+
+        function removeItem(itemId) {
+            if (confirm('Remove this item from cart?')) {
+                delete quantities[itemId];
+                updateTotals();
+                // In a real app, you'd remove the DOM element here
+                alert('Item removed from cart');
+            }
+        }
+
+        function updateTotals() {
+            let subtotal = 0;
+            let itemCount = 0;
+
+            for (let id in quantities) {
+                subtotal += prices[id] * quantities[id];
+                itemCount += quantities[id];
+            }
+
+            const tax = subtotal * 0.08;
+            const discount = 10.00;
+            const total = subtotal + tax - discount;
+
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+    </script>
+
+    <br><br>
+
+
+<audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
+                    <div class="sound">
+                        <div class="sound-icon"></div>
+                        <div class="sound-wave sound-wave_one"></div>
+                        <div class="sound-wave sound-wave_two"></div>
+                        <div class="sound-wave sound-wave_three"></div>
+                    </div>
+                    <div class="segments-box">
+                        <div data-range="1-20" class="segment"><span></span></div>
+                        <div data-range="21-40" class="segment"><span></span></div>
+                        <div data-range="41-60" class="segment"><span></span></div>
+                        <div data-range="61-80" class="segment"><span></span></div>
+                        <div data-range="81-100" class="segment"><span></span></div>
+                    </div>
+                </div><span id="PING_IFRAME_FORM_DETECTION" style="display: none;"></span></body></html>

@@ -303,7 +303,7 @@
                                 </div>
                             </td>
                             <td>Dog Food</td>
-                            <td>$42.99</td>
+                            <td>₱450</td>
                             <td>45 units</td>
                             <td><span class="stock-status stock-in">In Stock</span></td>
                             <td>Dogs</td>
@@ -326,7 +326,7 @@
                                 </div>
                             </td>
                             <td>Dog Toys</td>
-                            <td>$18.99</td>
+                            <td>₱189.99</td>
                             <td>12 units</td>
                             <td><span class="stock-status stock-low">Low Stock</span></td>
                             <td>Dogs</td>
@@ -349,7 +349,7 @@
                                 </div>
                             </td>
                             <td>Dog Treats</td>
-                            <td>$24.99</td>
+                            <td>Php 199.00</td>
                             <td>67 units</td>
                             <td><span class="stock-status stock-in">In Stock</span></td>
                             <td>Dogs</td>
@@ -372,7 +372,7 @@
                                 </div>
                             </td>
                             <td>Cat Care</td>
-                            <td>$24.00</td>
+                            <td>₱240.00</td>
                             <td>8 units</td>
                             <td><span class="stock-status stock-low">Low Stock</span></td>
                             <td>Cats</td>
@@ -395,7 +395,7 @@
                                 </div>
                             </td>
                             <td>Dog Accessories</td>
-                            <td>$79.99</td>
+                            <td>₱799.99</td>
                             <td>23 units</td>
                             <td><span class="stock-status stock-in">In Stock</span></td>
                             <td>Dogs</td>
@@ -457,7 +457,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Price ($)</label>
+                            <label>Price (₱)</label>
                             <input type="number" step="0.01" placeholder="0.00" required="">
                         </div>
                         <div class="form-group">
@@ -492,31 +492,191 @@
     </div>
 
     <script>
+        // Sample products data
+        let products = [
+            { id: 1, name: 'Premium Grain-Free Adult Dog Food 15lb', category: 'Dog Food', price: 450, stock: 45, status: 'In Stock', petType: 'Dogs', sku: 'DGF-001', icon: '🍖' },
+            { id: 2, name: 'Organic Chicken & Rice Formula 30lb', category: 'Dog Food', price: 607.25, stock: 32, status: 'In Stock', petType: 'Dogs', sku: 'DGF-002', icon: '🥩' },
+            { id: 3, name: 'Sensitive Stomach Lamb & Oatmeal 20lb', category: 'Dog Food', price: 2749, stock: 67, status: 'In Stock', petType: 'Dogs', sku: 'DGF-003', icon: '🦴' },
+            { id: 4, name: 'Puppy Development Formula 25lb', category: 'Dog Food', price: 2899, stock: 28, status: 'In Stock', petType: 'Dogs', sku: 'DGF-004', icon: '🍗' },
+            { id: 5, name: 'Senior Dog Nutrition 18lb', category: 'Dog Food', price: 2499, stock: 40, status: 'In Stock', petType: 'Dogs', sku: 'DGF-005', icon: '🥘' },
+            { id: 6, name: 'Weight Management Turkey Recipe 22lb', category: 'Dog Food', price: 2349, stock: 19, status: 'Low Stock', petType: 'Dogs', sku: 'DGF-006', icon: '🍲' },
+            { id: 7, name: 'Wild-Caught Salmon & Sweet Potato 16lb', category: 'Dog Food', price: 3249, stock: 55, status: 'In Stock', petType: 'Dogs', sku: 'DGF-007', icon: '🍖' },
+            { id: 8, name: 'High-Protein Beef & Vegetables 28lb', category: 'Dog Food', price: 3599, stock: 33, status: 'In Stock', petType: 'Dogs', sku: 'DGF-008', icon: '🥩' },
+            { id: 9, name: 'Interactive Squeaky Toy Set', category: 'Dog Toys', price: 189.99, stock: 12, status: 'Low Stock', petType: 'Dogs', sku: 'DGT-015', icon: '🧸' },
+            { id: 10, name: 'Natural Dental Chew Sticks', category: 'Dog Treats', price: 199, stock: 67, status: 'In Stock', petType: 'Dogs', sku: 'DGT-028', icon: '🦴' },
+            { id: 11, name: 'Premium Cat Litter 20lb', category: 'Cat Care', price: 240, stock: 8, status: 'Low Stock', petType: 'Cats', sku: 'CAT-042', icon: '🐱' },
+            { id: 12, name: 'Orthopedic Dog Bed', category: 'Dog Accessories', price: 799.99, stock: 23, status: 'In Stock', petType: 'Dogs', sku: 'DGA-073', icon: '🛏️' }
+        ];
+        
+        let nextId = 13;
+        let editingId = null;
+
+        function renderTable(filteredProducts = products) {
+            const tbody = document.querySelector('.data-table tbody');
+            tbody.innerHTML = '';
+            
+            filteredProducts.forEach(product => {
+                const statusClass = product.status === 'In Stock' ? 'stock-in' : product.status === 'Low Stock' ? 'stock-low' : 'stock-out';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div class="product-info">
+                            <div class="product-thumb">${product.icon}</div>
+                            <div>
+                                <div style="font-weight: 600;">${product.name}</div>
+                                <div style="font-size: 12px; color: #999;">SKU: ${product.sku}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${product.category}</td>
+                    <td>₱${product.price.toFixed(2)}</td>
+                    <td>${product.stock} units</td>
+                    <td><span class="stock-status ${statusClass}">${product.status}</span></td>
+                    <td>${product.petType}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn btn-primary btn-sm" onclick="openModal('edit', ${product.id})">Edit</button>
+                            <button class="btn btn-secondary btn-sm" onclick="openStockModal(${product.id})">Stock</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">Delete</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function filterProducts() {
+            const searchValue = document.querySelector('.search-box').value.toLowerCase();
+            const categoryValue = document.querySelectorAll('.filter-select')[0].value;
+            const stockValue = document.querySelectorAll('.filter-select')[1].value;
+            
+            let filtered = products.filter(product => {
+                const matchSearch = product.name.toLowerCase().includes(searchValue) || product.sku.toLowerCase().includes(searchValue);
+                const matchCategory = categoryValue === 'All Categories' || product.category === categoryValue;
+                const matchStock = stockValue === 'All Stock Status' || product.status === stockValue;
+                
+                return matchSearch && matchCategory && matchStock;
+            });
+            
+            renderTable(filtered);
+        }
+
+        // Add event listeners for filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBox = document.querySelector('.search-box');
+            const filterSelects = document.querySelectorAll('.filter-select');
+            
+            if (searchBox) searchBox.addEventListener('keyup', filterProducts);
+            filterSelects.forEach(select => select.addEventListener('change', filterProducts));
+        });
+
         function openModal(mode, id) {
-            document.getElementById('productModal').classList.add('show');
-            if (mode === 'edit') {
-                document.getElementById('modalTitle').textContent = 'Edit Product';
+            editingId = id;
+            const modal = document.getElementById('productModal');
+            modal.classList.add('show');
+            
+            if (mode === 'edit' && id) {
+                const product = products.find(p => p.id === id);
+                if (product) {
+                    document.getElementById('modalTitle').textContent = 'Edit Product';
+                    document.querySelector('input[placeholder="Enter product name"]').value = product.name;
+                    document.querySelector('textarea[placeholder="Enter product description"]').value = '';
+                    document.querySelectorAll('select')[0].value = product.category;
+                    document.querySelectorAll('select')[1].value = product.petType;
+                    document.querySelector('input[type="number"][placeholder="0.00"]').value = product.price;
+                    document.querySelector('input[placeholder="0"][type="number"]').value = product.stock;
+                    document.querySelector('input[placeholder="e.g., DGF-001"]').value = product.sku;
+                }
             } else {
                 document.getElementById('modalTitle').textContent = 'Add New Product';
+                document.querySelector('form').reset();
             }
         }
 
         function closeModal() {
             document.getElementById('productModal').classList.remove('show');
+            editingId = null;
         }
 
-        function updateStock(id) {
-            const newStock = prompt('Enter new stock quantity:');
-            if (newStock) {
-                alert(`Stock updated to ${newStock} units for product ${id}`);
+        function openStockModal(id) {
+            const product = products.find(p => p.id === id);
+            const newStock = prompt(`Enter new stock quantity for ${product.name}:`, product.stock);
+            if (newStock !== null) {
+                product.stock = parseInt(newStock) || product.stock;
+                updateProductStatus(product);
+                renderTable();
+            }
+        }
+
+        function updateProductStatus(product) {
+            if (product.stock === 0) {
+                product.status = 'Out of Stock';
+            } else if (product.stock < 20) {
+                product.status = 'Low Stock';
+            } else {
+                product.status = 'In Stock';
             }
         }
 
         function deleteProduct(id) {
             if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
-                alert(`Product ${id} deleted successfully`);
+                products = products.filter(p => p.id !== id);
+                renderTable();
+                alert('Product deleted successfully');
             }
         }
+
+        // Handle form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const name = document.querySelector('input[placeholder="Enter product name"]').value;
+                    const category = document.querySelectorAll('select')[0].value;
+                    const petType = document.querySelectorAll('select')[1].value;
+                    const price = parseFloat(document.querySelector('input[type="number"][placeholder="0.00"]').value);
+                    const stock = parseInt(document.querySelector('input[placeholder="0"][type="number"]').value);
+                    const sku = document.querySelector('input[placeholder="e.g., DGF-001"]').value;
+                    
+                    if (editingId) {
+                        const product = products.find(p => p.id === editingId);
+                        if (product) {
+                            product.name = name;
+                            product.category = category;
+                            product.petType = petType;
+                            product.price = price;
+                            product.stock = stock;
+                            product.sku = sku;
+                            updateProductStatus(product);
+                        }
+                    } else {
+                        const newProduct = {
+                            id: nextId++,
+                            name: name,
+                            category: category,
+                            price: price,
+                            stock: stock,
+                            status: stock > 20 ? 'In Stock' : stock > 0 ? 'Low Stock' : 'Out of Stock',
+                            petType: petType,
+                            sku: sku,
+                            icon: '📦'
+                        };
+                        products.push(newProduct);
+                    }
+                    
+                    renderTable();
+                    closeModal();
+                    alert(editingId ? 'Product updated successfully' : 'Product added successfully');
+                });
+            }
+        });
+
+        // Initial render
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable();
+        });
     </script>
 
 

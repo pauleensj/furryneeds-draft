@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - FurryNeeds</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .top-bar {
+            background: #FDCA5D;
+            color: white;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        .header-main {
+            padding: 20px 0;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FDCA5D;
+        }
+        /* Progress Steps */
+        .progress-steps {
+            background: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .step.active .step-circle {
+            background: #FDCA5D;
+            color: white;
+        }
+        .step.completed .step-circle {
+            background: #4CAF50;
+            color: white;
+        }
+        .step-label {
+            font-weight: 600;
+            color: #999;
+        }
+        .step.active .step-label {
+            color: #FDCA5D;
+        }
+        .step.completed .step-label {
+            color: #4CAF50;
+        }
+        .step-arrow {
+            color: #e0e0e0;
+            font-size: 20px;
+        }
+        /* Main Content */
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            padding: 20px 0 40px;
+        }
+        .checkout-form {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+        }
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .form-section {
+            margin-bottom: 40px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #FDCA5D;
+        }
+        .required {
+            color: #e74c3c;
+        }
+        /* Order Summary */
+        .order-summary {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .summary-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .summary-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .summary-item-image {
+            width: 60px;
+            height: 60px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .summary-item-details {
+            flex: 1;
+        }
+        .summary-item-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .summary-item-qty {
+            font-size: 13px;
+            color: #666;
+        }
+        .summary-item-price {
+            font-weight: bold;
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 16px;
+        }
+        .summary-line.total {
+            font-size: 20px;
+            font-weight: bold;
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 2px solid #e0e0e0;
+        }
+        .discount-applied {
+            background: #e8f5e9;
+            border: 1px solid #4CAF50;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .discount-applied .icon {
+            font-size: 20px;
+        }
+        .discount-applied .text {
+            flex: 1;
+        }
+        .discount-applied .code {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .btn-proceed {
+            width: 100%;
+            padding: 18px;
+            background: #FDCA5D;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        .btn-proceed:hover {
+            background: #e6b84d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(253, 202, 93, 0.4);
+        }
+        .btn-proceed:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .secure-notice {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+        @media (max-width: 768px) {
+            .checkout-content {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            🔒 Secure Checkout 
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">🐾 FurryNeeds</div>
+                    <div style="color: #666; font-size: 14px;">
+                        Need help? Call +63 2 8700-0000
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+        <div class="container">
+            <div class="steps-container">
+                <div class="step completed">
+                    <div class="step-circle">✓</div>
+                    <div class="step-label">Cart</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step active">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Checkout</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Payment</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Confirmation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Content -->
+    <div class="container">
+        <div class="checkout-content">
+            <!-- Checkout Form -->
+            <div class="checkout-form">
+                <form id="checkoutForm">
+                    <!-- Contact Information -->
+                    <div class="form-section">
+                        <h2 class="section-title">Contact Information</h2>
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" placeholder="your@email.com" required="">
+                            <div class="error" id="emailError"></div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Address -->
+                    <div class="form-section">
+                        <h2 class="section-title">Shipping Details</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>First Name <span class="required">*</span></label>
+                                <input type="text" id="firstName" placeholder="John" required="">
+                                <div class="error" id="firstNameError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name <span class="required">*</span></label>
+                                <input type="text" id="lastName" placeholder="Walker" required="">
+                                <div class="error" id="lastNameError"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>House No., Street, Barangay <span class="required">*</span></label>
+                            <input type="text" id="address" placeholder="123, Main Street, Barangay" required="">
+                            <div class="error" id="addressError"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>City <span class="required">*</span></label>
+                                <input type="text" id="city" placeholder="Manila" required="">
+                                <div class="error" id="cityError"></div>
+                            </div>
+                    
+                            <div class="form-group">
+                                <label>Province <span class="required">*</span></label>
+                                <select id="province" required="">
+                                    <option value="">Select Province</option>
+                                    <option value="BICOL">Bicol Region</option>
+
+                                </select>
+                                <div class="error" id="provinceError"></div>
+                            </div>
+                        </div>
+                         
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Postal Code <span class="required">*</span></label>
+                                <input type="text" id="zip" placeholder="1000" required="">
+                                <div class="error" id="zipError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Number <span class="required">*</span></label>
+                                <input type="tel" id="phone" placeholder="+63 9XX XXX XXXX" value="+63 " required="">
+                                <div class="error" id="phoneError"></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h2 class="summary-title">Order Summary</h2>
+
+                <!-- Discount Applied Notice -->
+                <div class="discount-applied">
+                    <div class="icon">🎉</div>
+                    <div class="text">
+                        Promo code <span class="code">WELCOME10</span> applied!
+                        <div style="font-size: 13px; color: #666; margin-top: 2px;">You save P94.70</div>
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-item-image"> </div>
+                    <div class="summary-item-details">
+                        <div class="summary-item-name">Premium Grain-Free Dog Food</div>
+                        <div class="summary-item-qty">Qty: 1 × P450.00</div>
+                    </div>
+                    <div class="summary-item-price">P450.00</div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-item-image"> </div>
+                    <div class="summary-item-details">
+                        <div class="summary-item-name">Interactive Squeaky Toy Set</div>
+                        <div class="summary-item-qty">Qty: 2 × P99.00</div>
+                    </div>
+                    <div class="summary-item-price">P198.00</div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="summary-item-image"> </div>
+                    <div class="summary-item-details">
+                        <div class="summary-item-name">Natural Dental Chew Sticks</div>
+                        <div class="summary-item-qty">Qty: 1 × P299.00</div>
+                    </div>
+                    <div class="summary-item-price">P299.00</div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <span>P947.00</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Discount (10%)</span>
+                        <span style="color: #4CAF50; font-weight: 600;">-P94.70</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Shipping</span>
+                        <span id="shipping" style="color: #4CAF50; font-weight: 600;">FREE</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total</span>
+                        <span id="total">P852.30</span>
+                    </div>
+                </div>
+
+                <button class="btn-proceed" id="proceedBtn">
+                    Proceed to Payment →
+                </button>
+
+                <div class="secure-notice">
+                    🔒 Your information is secure and encrypted
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <script>
+        // Form validation
+        const form = document.getElementById('checkoutForm');
+        const proceedBtn = document.getElementById('proceedBtn');
+
+        // Field validation
+        function validateField(fieldId, errorId, validationFn, errorMsg) {
+            const field = document.getElementById(fieldId);
+            const error = document.getElementById(errorId);
+
+            if (!field.value.trim() || (validationFn && !validationFn(field.value))) {
+                error.textContent = errorMsg;
+                return false;
+            }
+            error.textContent = '';
+            return true;
+        }
+
+        // Email validation
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        // Phone validation - Philippine numbers
+        function isValidPhone(phone) {
+            return /^(\+63|0)[0-9]{10}$/.test(phone.replace(/\s/g, '')) || /^\+63\s?9\d{2}\s?\d{3}\s?\d{4}$/.test(phone);
+        }
+
+        // ZIP validation - Philippine postal codes are 4 digits
+        function isValidZip(zip) {
+            return /^\d{4}$/.test(zip);
+        }
+
+        // Set initial totals including shipping rule
+        (function updateSummaryTotals() {
+            const subtotal = 947.00; // this should match order items in template
+            const discount = 94.70;
+            const shipping = subtotal >= 500 ? 0 : 35;
+            const total = subtotal - discount + shipping;
+
+            document.getElementById('shipping').textContent = shipping === 0 ? 'FREE' : `P${shipping.toFixed(2)}`;
+            document.getElementById('total').textContent = `P${total.toFixed(2)}`;
+        })();
+
+        // Proceed to payment
+        proceedBtn.addEventListener('click', function() {
+            // Check if all required fields are filled
+            const email = document.getElementById('email').value.trim();
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const province = document.getElementById('province').value.trim();
+            const zip = document.getElementById('zip').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            // Simple validation
+            if (!email || !firstName || !lastName || !address || !city || !province || !zip || !phone) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Store checkout data
+            const subtotal = 947.00;
+            const discount = 94.70;
+            const shipping = subtotal >= 500 ? 0 : 35;
+            const total = subtotal - discount + shipping;
+
+            document.getElementById('shipping').textContent = shipping === 0 ? 'FREE' : `P${shipping.toFixed(2)}`;
+            document.getElementById('total').textContent = `P${total.toFixed(2)}`;
+
+            const checkoutData = {
+                email: email,
+                firstName: firstName,
+                lastName: lastName,
+                address: address,
+                apartment: document.getElementById('apartment').value.trim(),
+                city: city,
+                state: province,
+                zip: zip,
+                phone: phone,
+                orderSummary: {
+                    items: [
+                        { name: 'Premium Grain-Free Dog Food', qty: 1, price: 450, icon: '🍖' },
+                        { name: 'Interactive Squeaky Toy Set', qty: 2, price: 99, icon: '🧸' },
+                        { name: 'Natural Dental Chew Sticks', qty: 1, price: 299, icon: '🦴' }
+                    ],
+                    subtotal: subtotal,
+                    discount: discount,
+                    discountCode: 'WELCOME10',
+                    shipping: shipping,
+                    total: total
+                }
+            };
+
+            localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+            window.location.href = '3-Payment.html';
+        });
+
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', function() {
+            if (!this.value.startsWith('+63')) {
+                this.value = '+63 ' + this.value.replace(/^\+?63\s?/, '').replace(/^\s+/, '');
+            }
+        });
+
+        phoneInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && this.selectionStart <= 4) {
+                e.preventDefault();
+            }
+        });
+
+    </script>
+

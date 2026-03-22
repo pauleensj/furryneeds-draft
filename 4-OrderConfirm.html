@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - FurryNeeds</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header */
+        header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .top-bar {
+            background: #4CAF50;
+            color: white;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        .header-main {
+            padding: 20px 0;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FDCA5D;
+        }
+        /* Progress Steps */
+        .progress-steps {
+            background: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .step.completed .step-circle {
+            background: #4CAF50;
+            color: white;
+        }
+        .step-label {
+            font-weight: 600;
+            color: #999;
+        }
+        .step.completed .step-label {
+            color: #4CAF50;
+        }
+        .step-arrow {
+            color: #e0e0e0;
+            font-size: 20px;
+        }
+        /* Success Banner */
+        .success-banner {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: scaleIn 0.5s ease-out;
+        }
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .success-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .success-message {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        .order-number {
+            background: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        /* Order Details */
+        .order-details {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            color: #333;
+        }
+        .detail-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .detail-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .detail-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .detail-content {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .detail-highlight {
+            font-weight: 600;
+            color: #FDCA5D;
+        }
+        /* Order Items */
+        .order-items {
+            margin-bottom: 20px;
+        }
+        .order-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .item-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .item-details {
+            flex: 1;
+        }
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .item-qty {
+            font-size: 14px;
+            color: #666;
+        }
+        .item-price {
+            font-weight: bold;
+            color: #333;
+        }
+        /* Order Summary */
+        .order-summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 16px;
+        }
+        .summary-line.total {
+            font-size: 22px;
+            font-weight: bold;
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 2px solid #ddd;
+            color: #4CAF50;
+        }
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary {
+            background: #FDCA5D;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #e6b84d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(253, 202, 93, 0.4);
+        }
+        .btn-secondary {
+            background: white;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+        .btn-secondary:hover {
+            border-color: #FDCA5D;
+            color: #FDCA5D;
+        }
+        /* Info Box */
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 30px;
+        }
+        .info-box-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1976D2;
+        }
+        .info-box-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+        }
+        @media (max-width: 768px) {
+            .detail-row,
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            .success-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            ✓ Order Successfully Placed
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">🐾 FurryNeeds</div>
+                    <div style="color: #666; font-size: 14px;">
+                        Need help? Call +63 9 8700-0000
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+        <div class="container">
+            <div class="steps-container">
+                <div class="step completed">
+                    <div class="step-circle">✓</div>
+                    <div class="step-label">Cart</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step completed">
+                    <div class="step-circle">✓</div>
+                    <div class="step-label">Checkout</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step completed">
+                    <div class="step-circle">✓</div>
+                    <div class="step-label">Payment</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step completed">
+                    <div class="step-circle">✓</div>
+                    <div class="step-label">Confirmation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Success Banner -->
+        <div class="success-banner">
+            <div class="success-icon">🎉</div>
+            <div class="success-title">Your order has been successfully placed!</div>
+            <div class="success-message">
+                Thank you for shopping with FurryNeeds. We're preparing your order for delivery.
+            </div>
+            <div class="order-number">
+                Order Number: <span id="orderNumberDisplay">FN65036398</span>
+            </div>
+        </div>
+
+        <!-- Order Details -->
+        <div class="order-details">
+            <h2 class="section-title">Order Details</h2>
+
+            <div class="detail-row">
+                <div class="detail-group">
+                    <div class="detail-label">Order Number</div>
+                    <div class="detail-content detail-highlight" id="orderNumber">FN65036398</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Order Date</div>
+                    <div class="detail-content" id="orderDate">3/22/2026, 3:37:16 PM</div>
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="detail-group">
+                    <div class="detail-label">Payment Method</div>
+                    <div class="detail-content" id="paymentMethod">Cash on Delivery</div>
+                </div>
+                <div class="detail-group">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-content" id="email">scheescake69@gmail.com</div>
+                </div>
+            </div>
+
+            <div class="detail-group" style="margin-bottom: 0;">
+                <div class="detail-label">Shipping Address</div>
+                <div class="detail-content" id="shippingAddress">
+                    <strong>John Doe</strong><br>
+                    123, Main Street, Barangay<br>
+                    Manila, Metro Manila 1000<br>
+                    Phone: +63 912 345 6789
+        </div>
+            </div>
+        </div>
+
+        <!-- Order Items -->
+        <div class="order-details">
+            <h2 class="section-title">Order Summary</h2>
+
+            <div class="order-items" id="orderItems">
+                <div class="order-item">
+                    <div class="item-icon"> </div>
+                    <div class="item-details">
+                        <div class="item-name">Premium Grain-Free Dog Food</div>
+                        <div class="item-qty">Quantity: 1 × P450.00</div>
+                    </div>
+                    <div class="item-price">P450.00</div>
+                </div>
+            
+                <div class="order-item">
+                    <div class="item-icon"> </div>
+                    <div class="item-details">
+                        <div class="item-name">Interactive Squeaky Toy Set</div>
+                        <div class="item-qty">Quantity: 2 × P99.00</div>
+                    </div>
+                    <div class="item-price">P198.00</div>
+                </div>
+            
+                <div class="order-item">
+                    <div class="item-icon"> </div>
+                    <div class="item-details">
+                        <div class="item-name">Natural Dental Chew Sticks</div>
+                        <div class="item-qty">Quantity: 1 × P299.00</div>
+                    </div>
+                    <div class="item-price">P299.00</div>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <div class="summary-line">
+                    <span>Subtotal</span>
+                    <span id="subtotal">P947.00</span>
+                </div>
+                <div class="summary-line">
+                    <span>Discount (<span id="discountCode">WELCOME10</span>)</span>
+                    <span style="color: #4CAF50; font-weight: 600;" id="discount">-P94.70</span>
+                </div>
+                <div class="summary-line">
+                    <span>Shipping</span>
+                    <span id="shipping" style="color: #4CAF50; font-weight: 600;">FREE</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total Paid</span>
+                    <span id="total">P852.30</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <div class="info-box-title">📧 What happens next?</div>
+            <div class="info-box-content">
+                • You will receive an order confirmation email at <strong id="confirmEmail">scheescake69@gmail.com</strong><br>
+                • We'll send you shipping updates as your order is processed<br>
+                • Estimated delivery: <strong>5-7 business days</strong><br>
+                • Track your order anytime using your order number
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="window.print()">
+                🖨️ Print Order Details
+            </button>
+            <button class="btn btn-primary" onclick="window.location.href='1-Shopping Cart.html';">
+                 Continue Shopping
+            </button>
+        </div>
+
+        <br><br>
+    </div>
+
+    <script>
+        // Load order data
+        const orderData = JSON.parse(localStorage.getItem('orderData') || '{}');
+
+        if (!orderData.orderNumber) {
+            alert('No order data found. Please complete your order first.');
+            window.location.href = 'checkout.html';
+        }
+
+        // Display order number
+        document.getElementById('orderNumberDisplay').textContent = orderData.orderNumber;
+        document.getElementById('orderNumber').textContent = orderData.orderNumber;
+
+        // Display order date
+        document.getElementById('orderDate').textContent = orderData.orderDate;
+
+        // Display payment method
+        let paymentText = orderData.paymentMethod;
+        if (orderData.cardLastFour) {
+            paymentText += ` (****${orderData.cardLastFour})`;
+        }
+        document.getElementById('paymentMethod').textContent = paymentText;
+
+        // Display email
+        document.getElementById('email').textContent = orderData.email;
+        document.getElementById('confirmEmail').textContent = orderData.email;
+
+        // Display shipping address
+        document.getElementById('shippingAddress').innerHTML = `
+            <strong>${orderData.firstName} ${orderData.lastName}</strong><br>
+            ${orderData.address}${orderData.apartment ? ', ' + orderData.apartment : ''}<br>
+            ${orderData.city}, ${orderData.state} ${orderData.zip}<br>
+            Phone: ${orderData.phone}
+        `;
+
+        // Display order items
+        let itemsHTML = '';
+        orderData.orderSummary.items.forEach(item => {
+            const totalPrice = item.qty * item.price;
+            itemsHTML += `
+                <div class="order-item">
+                    <div class="item-icon">${item.icon}</div>
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-qty">Quantity: ${item.qty} × P${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="item-price">P${totalPrice.toFixed(2)}</div>
+                </div>
+            `;
+        });
+        document.getElementById('orderItems').innerHTML = itemsHTML;
+
+        // Display order summary
+        document.getElementById('subtotal').textContent = `P${orderData.orderSummary.subtotal.toFixed(2)}`;
+        document.getElementById('discount').textContent = `-P${orderData.orderSummary.discount.toFixed(2)}`;
+        document.getElementById('shipping').textContent = orderData.orderSummary.shipping === 0 ? 'FREE' : `P${orderData.orderSummary.shipping.toFixed(2)}`;
+        document.getElementById('discountCode').textContent = orderData.orderSummary.discountCode;
+        document.getElementById('total').textContent = `P${orderData.orderSummary.total.toFixed(2)}`;
+
+    
+        console.log('Order confirmation email sent to:', orderData.email);
+        console.log('Order details:', orderData);
+
+    </script>
+

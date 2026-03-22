@@ -249,11 +249,7 @@
             height: 300px;
             background: #f8f9fa;
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 18px;
+            padding: 15px;
         }
         @media (max-width: 768px) {
             .admin-layout {
@@ -283,12 +279,12 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <ul class="sidebar-menu">
-                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/1e2e1826-31f9-4944-a2fd-4c288b977797/admin-dashboard.html#" class="active"><span class="menu-icon">📊</span> Dashboard</a></li>
-                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/1e2e1826-31f9-4944-a2fd-4c288b977797/admin-products.html"><span class="menu-icon">📦</span> Products</a></li>
+                <li><a href="Admin Dashboard.html" class="active"><span class="menu-icon">📊</span> Dashboard</a></li>
+                <li><a href="Product Management - FurryNeeds Admin.html"><span class="menu-icon">📦</span> Products</a></li>
                 <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/1e2e1826-31f9-4944-a2fd-4c288b977797/admin-dashboard.html#orders"><span class="menu-icon">🛒</span> Orders</a></li>
                 <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/1e2e1826-31f9-4944-a2fd-4c288b977797/admin-dashboard.html#customers"><span class="menu-icon">👥</span> Customers</a></li>
-                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/1e2e1826-31f9-4944-a2fd-4c288b977797/admin-reports.html"><span class="menu-icon">📈</span> Reports</a></li>
-                <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/1e2e1826-31f9-4944-a2fd-4c288b977797/admin-dashboard.html#inventory"><span class="menu-icon">📋</span> Inventory</a></li>
+                <li><a href="Sales Reports - FurryNeeds Admin.html"><span class="menu-icon">📈</span> Reports</a></li>
+                <li><a href="Inventory.html"><span class="menu-icon">📋</span> Inventory</a></li>
                 <li><a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/1e2e1826-31f9-4944-a2fd-4c288b977797/admin-dashboard.html#settings"><span class="menu-icon">⚙️</span> Settings</a></li>
             </ul>
         </aside>
@@ -345,7 +341,7 @@
             <!-- Low Stock Alert -->
             <div class="alert">
                 <div class="alert-title">⚠️ Low Stock Alert</div>
-                <div>3 products are running low on stock. <a href="https://dede3phc22dgx.cloudfront.net/creao2/2ab7bd66-1a8a-47d3-95bb-253d9aec738c/98710340-f0e1-7045-c5ba-ef6bbe01060c/1e2e1826-31f9-4944-a2fd-4c288b977797/admin-products.html" style="color: #FDCA5D; font-weight: 600;">View inventory →</a></div>
+                <div>3 products are running low on stock. <a href="Inventory.html" style="color: #FDCA5D; font-weight: 600;">View inventory →</a></div>
             </div>
 
             <!-- Recent Orders -->
@@ -420,15 +416,14 @@
             <div class="content-section">
                 <div class="section-header">
                     <h2 class="section-title">Sales Overview</h2>
-                    <select class="btn btn-secondary">
+                    <select class="btn btn-secondary" id="dashboard-chart-range">
                         <option>Last 7 Days</option>
                         <option>Last 30 Days</option>
                         <option>Last 90 Days</option>
                     </select>
                 </div>
                 <div class="chart-container">
-                    📊 Sales Chart Visualization<br>
-                    <small style="margin-top: 10px;">(Chart library integration needed)</small>
+                    <canvas id="dashboard-sales-chart"></canvas>
                 </div>
             </div>
 
@@ -490,6 +485,60 @@
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rangeSelect = document.getElementById('dashboard-chart-range');
+            const chartCtx = document.getElementById('dashboard-sales-chart').getContext('2d');
+
+            const chartData = {
+                'Last 7 Days': {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    values: [1100, 1200, 1400, 1600, 1500, 1700, 1850]
+                },
+                'Last 30 Days': {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    values: [12500, 14700, 13500, 16300]
+                },
+                'Last 90 Days': {
+                    labels: ['Jan', 'Feb', 'Mar'],
+                    values: [42100, 46750, 49580]
+                }
+            };
+
+            const dashboardChart = new Chart(chartCtx, {
+                type: 'line',
+                data: {
+                    labels: chartData['Last 7 Days'].labels,
+                    datasets: [{
+                        label: 'Revenue',
+                        data: chartData['Last 7 Days'].values,
+                        borderColor: '#FDCA5D',
+                        backgroundColor: 'rgba(253, 202, 93, 0.35)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    },
+                    plugins: {
+                        legend: { position: 'top' }
+                    }
+                }
+            });
+
+            rangeSelect.addEventListener('change', function() {
+                const selected = chartData[this.value];
+                dashboardChart.data.labels = selected.labels;
+                dashboardChart.data.datasets[0].data = selected.values;
+                dashboardChart.update();
+            });
+        });
+    </script>
 
 <audio class="audio-output" style="display: none;"></audio><div id="volume-booster-visusalizer">
                     <div class="sound">

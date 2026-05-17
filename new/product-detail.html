@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Grain-Free Dog Food - FurryNeeds</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .top-bar {
+            background: #FDCA5D;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .header-main {
+            padding: 20px 0;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FDCA5D;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 15px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4444;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .breadcrumb {
+            padding: 20px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #FDCA5D;
+            text-decoration: none;
+        }
+
+        .product-detail {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 20px 0;
+        }
+
+        .product-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 500px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            margin-bottom: 15px;
+        }
+
+        .thumbnail-images {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .thumbnail {
+            height: 100px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .thumbnail.active {
+            border-color: #FDCA5D;
+        }
+
+        .product-info h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .product-meta {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .stars-large {
+            color: #ffc107;
+            font-size: 18px;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .badge-stock {
+            background: #4CAF50;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .price-section {
+            margin-bottom: 30px;
+        }
+
+        .price-large {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .price-old {
+            font-size: 20px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+
+        .savings {
+            color: #4CAF50;
+            font-weight: 600;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .product-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .option-group {
+            margin-bottom: 20px;
+        }
+
+        .option-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .size-btn {
+            padding: 12px 24px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .size-btn:hover,
+        .size-btn.active {
+            border-color: #FDCA5D;
+            background: #fff9ed;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .qty-controls {
+            display: flex;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .qty-btn {
+            padding: 12px 20px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .qty-display {
+            padding: 12px 24px;
+            border-left: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn-add-to-cart {
+            padding: 18px;
+            background: #FDCA5D;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-wishlist {
+            padding: 18px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .product-tabs {
+            margin-top: 40px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 5px;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #999;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            color: #FDCA5D;
+            border-bottom-color: #FDCA5D;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .specs-table td {
+            padding: 15px;
+        }
+
+        .specs-table td:first-child {
+            font-weight: 600;
+            width: 200px;
+        }
+
+        .review {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 20px 0;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .product-main {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="top-bar">
+            🎉 Free Shipping on Orders Over ₱2,500 | 30-Day Returns
+        </div>
+
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">🐾 FurryNeeds</div>
+
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search for products, brands...">
+                    </div>
+
+                    <div class="header-actions">
+                        <button class="icon-btn">❤️</button>
+
+                        <button class="icon-btn" onclick="window.location.href='cart.html'">
+                            🛒
+                            <span class="badge">3</span>
+                        </button>
+
+                        <button class="icon-btn" onclick="window.location.href='login.html'">👤</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> /
+            <a href="products.html">Dogs</a> /
+            <a href="products.html">Food</a> /
+            Premium Grain-Free Dog Food
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="product-detail">
+            <div class="product-main">
+
+                <div class="product-images">
+                    <div class="main-image">🍖</div>
+
+                    <div class="thumbnail-images">
+                        <div class="thumbnail active">🍖</div>
+                        <div class="thumbnail">📦</div>
+                        <div class="thumbnail">🥩</div>
+                        <div class="thumbnail">📋</div>
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <h1>Premium Grain-Free Adult Dog Food</h1>
+
+                    <div class="product-meta">
+                        <div class="rating-large">
+                            <span class="stars-large">★★★★★</span>
+                            <span class="rating-text">4.8/5 (248 reviews)</span>
+                        </div>
+
+                        <span class="badge-stock">✓ In Stock</span>
+                    </div>
+
+                    <div class="price-section">
+                        <div>
+                            <span class="price-large">₱2,450</span>
+                            <span class="price-old">₱3,100</span>
+                        </div>
+                        <div class="savings">Save ₱650 (22% off)</div>
+                    </div>
+
+                    <div class="product-description">
+                        Healthy and tasty dog food made with real chicken.
+                        Helps keep your dog strong, active, and healthy.
+                        Great for dogs with sensitive stomachs.
+                    </div>
+
+                    <div class="product-options">
+                        <div class="option-group">
+                            <label class="option-label">Size:</label>
+
+                            <div class="size-options">
+                                <button class="size-btn">5 lb - ₱1,150</button>
+                                <button class="size-btn active">15 lb - ₱2,450</button>
+                                <button class="size-btn">30 lb - ₱4,300</button>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <label class="option-label">Quantity:</label>
+
+                            <div class="quantity-selector">
+                                <div class="qty-controls">
+                                    <button class="qty-btn" onclick="decreaseQty()">−</button>
+                                    <div class="qty-display" id="qty">1</div>
+                                    <button class="qty-btn" onclick="increaseQty()">+</button>
+                                </div>
+
+                                <span style="color: #666;">Maximum 10 per order</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-add-to-cart" onclick="window.location.href='cart.html'">
+                            🛒 Add to Cart
+                        </button>
+
+                        <button class="btn-wishlist">❤️</button>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <span>🚚</span>
+                            <span>Free shipping over ₱2,500</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <span>↩️</span>
+                            <span>30-day easy returns</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <span>✓</span>
+                            <span>Vet recommended</span>
+                        </div>
+
+                        <div class="feature-item">
+                            <span>🐶</span>
+                            <span>Good for adult dogs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="switchTab(event, 'description')">Description</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'ingredients')">Ingredients</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'specs')">Specifications</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'reviews')">Reviews</button>
+                </div>
+
+                <div id="description" class="tab-content active">
+                    <h3 style="margin-bottom: 15px;">Product Description</h3>
+
+                    <p style="line-height: 1.8; color: #666;">
+                        This dog food is made for adult dogs. It has real chicken,
+                        protein, and nutrients to help your dog stay healthy and active.
+                    </p>
+
+                    <br>
+
+                    <p style="line-height: 1.8; color: #666;">
+                        It is grain-free, so it is also good for dogs with sensitive stomachs.
+                        It can help support healthy skin, shiny coat, and strong muscles.
+                    </p>
+                </div>
+
+                <div id="ingredients" class="tab-content">
+                    <h3 style="margin-bottom: 15px;">Guaranteed Analysis</h3>
+
+                    <ul style="line-height: 2; color: #666;">
+                        <li>Crude Protein: 28%</li>
+                        <li>Crude Fat: 16%</li>
+                        <li>Crude Fiber: 4.5%</li>
+                        <li>Moisture: 10%</li>
+                        <li>Omega-6 Fatty Acids: 3.0%</li>
+                        <li>Omega-3 Fatty Acids: 0.5%</li>
+                    </ul>
+
+                    <br>
+
+                    <h3 style="margin-bottom: 15px;">Ingredients</h3>
+
+                    <p style="line-height: 1.8; color: #666;">
+                        Chicken, chicken meal, sweet potatoes, peas, potatoes,
+                        chicken fat, egg product, natural flavor, flaxseed, fish oil,
+                        vitamins, and minerals.
+                    </p>
+                </div>
+
+                <div id="specs" class="tab-content">
+                    <table class="specs-table">
+                        <tr>
+                            <td>Brand</td>
+                            <td>FurryNeeds Premium</td>
+                        </tr>
+
+                        <tr>
+                            <td>Product Name</td>
+                            <td>Premium Grain-Free Adult Dog Food</td>
+                        </tr>
+
+                        <tr>
+                            <td>Weight</td>
+                            <td>15 lbs / 6.8 kg</td>
+                        </tr>
+
+                        <tr>
+                            <td>Life Stage</td>
+                            <td>Adult</td>
+                        </tr>
+
+                        <tr>
+                            <td>Breed Size</td>
+                            <td>All Breeds</td>
+                        </tr>
+
+                        <tr>
+                            <td>Primary Protein</td>
+                            <td>Chicken</td>
+                        </tr>
+
+                        <tr>
+                            <td>Grain-Free</td>
+                            <td>Yes</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="reviews" class="tab-content">
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="margin-bottom: 15px;">Customer Reviews</h3>
+
+                        <div style="display: flex; align-items: center; gap: 20px;">
+                            <div style="font-size: 48px; font-weight: bold;">4.8</div>
+
+                            <div>
+                                <div class="stars-large" style="font-size: 24px;">★★★★★</div>
+                                <div style="color: #666;">Based on 248 reviews</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div>
+                                <div class="reviewer-name">Sarah M.</div>
+                                <div class="stars-large">★★★★★</div>
+                            </div>
+
+                            <div class="review-date">2 days ago</div>
+                        </div>
+
+                        <div style="font-weight: 600; margin-bottom: 8px;">Good dog food!</div>
+
+                        <div style="color: #666; line-height: 1.6;">
+                            My dog enjoys this food and looks healthier and more active now.
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div>
+                                <div class="reviewer-name">Michael T.</div>
+                                <div class="stars-large">★★★★★</div>
+                            </div>
+
+                            <div class="review-date">1 week ago</div>
+                        </div>
+
+                        <div style="font-weight: 600; margin-bottom: 8px;">Good for sensitive stomachs</div>
+
+                        <div style="color: #666; line-height: 1.6;">
+                            My dog has a sensitive stomach, and this food works well for her.
+                        </div>
+                    </div>
+
+                    <div class="review">
+                        <div class="review-header">
+                            <div>
+                                <div class="reviewer-name">Jennifer K.</div>
+                                <div class="stars-large">★★★★☆</div>
+                            </div>
+
+                            <div class="review-date">2 weeks ago</div>
+                        </div>
+
+                        <div style="font-weight: 600; margin-bottom: 8px;">Nice quality</div>
+
+                        <div style="color: #666; line-height: 1.6;">
+                            The quality is good and my dogs like it.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let qty = 1;
+
+        function increaseQty() {
+            if (qty < 10) {
+                qty++;
+                document.getElementById("qty").textContent = qty;
+            }
+        }
+
+        function decreaseQty() {
+            if (qty > 1) {
+                qty--;
+                document.getElementById("qty").textContent = qty;
+            }
+        }
+
+        function switchTab(event, tabName) {
+            document.querySelectorAll(".tab-btn").forEach(function(btn) {
+                btn.classList.remove("active");
+            });
+
+            document.querySelectorAll(".tab-content").forEach(function(content) {
+                content.classList.remove("active");
+            });
+
+            event.target.classList.add("active");
+            document.getElementById(tabName).classList.add("active");
+        }
+    </script>
+
+</body>
+</html>
